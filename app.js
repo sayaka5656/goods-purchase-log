@@ -39,3 +39,4 @@ document.querySelector('#exportButton').addEventListener('click',()=>{const choi
 document.querySelector('#importInput').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{state={...initial,...JSON.parse(await file.text())};save();alert('バックアップを読み込みました。')}catch{alert('読み込めませんでした。JSON形式のバックアップを選んでください。')}});
 if('serviceWorker'in navigator) navigator.serviceWorker.register('./sw.js'); render();
 
+document.addEventListener('click',e=>{const b=e.target.closest('[data-close-entry],#entryDialog .dialog-header .icon-button');if(!b)return;e.preventDefault();e.stopImmediatePropagation();document.querySelector('#entryDialog')?.close();},true);

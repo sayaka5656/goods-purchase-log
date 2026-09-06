@@ -40,3 +40,5 @@ document.querySelector('#importInput').addEventListener('change',async e=>{const
 if('serviceWorker'in navigator) navigator.serviceWorker.register('./sw.js'); render();
 
 document.addEventListener('click',e=>{const b=e.target.closest('[data-close-entry],#entryDialog .dialog-header .icon-button');if(!b)return;e.preventDefault();e.stopImmediatePropagation();document.querySelector('#entryDialog')?.close();},true);
+/* Keep the open section after refresh. */
+(()=>{const k='goods-purchase-log-page',valid=['home','goods','random','plans'];try{const saved=sessionStorage.getItem(k);if(valid.includes(saved)){page=saved;render();}}catch{}document.addEventListener('click',e=>{const nav=e.target.closest('[data-page]');if(!nav)return;try{sessionStorage.setItem(k,nav.dataset.page)}catch{}},true);})();

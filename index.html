@@ -13,15 +13,10 @@
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">MY MERCH LOG</p>
-          <h1>グッズ購入記録</h1>
-        </div>
+        <div><p class="eyebrow">MY MERCH LOG</p><h1>グッズ購入記録</h1></div>
         <button class="icon-button" id="exportButton" aria-label="データを書き出す" title="データを書き出す">⇩</button>
       </header>
-
       <main id="app" class="content"></main>
-
       <nav class="bottom-nav" aria-label="メインメニュー">
         <button data-page="home" class="nav-item active"><span>⌂</span>ホーム</button>
         <button data-page="goods" class="nav-item"><span>□</span>グッズ一覧</button>
@@ -29,43 +24,23 @@
         <button data-page="plans" class="nav-item"><span>♡</span>購入予定</button>
       </nav>
     </div>
-
-    <dialog id="entryDialog">
-      <form method="dialog" id="entryForm">
-        <div class="dialog-header">
-          <h2 id="dialogTitle">登録</h2>
-          <button class="icon-button" value="cancel" aria-label="閉じる">×</button>
-        </div>
-        <div id="formFields" class="form-fields"></div>
-        <div class="dialog-actions">
-          <button class="button secondary" value="cancel">キャンセル</button>
-          <button class="button primary" id="saveButton" value="default">保存する</button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="confirmDialog" class="confirm-dialog">
-      <form method="dialog">
-        <h2>削除しますか？</h2>
-        <p id="confirmText">この記録は端末から削除されます。</p>
-        <div class="dialog-actions">
-          <button class="button secondary" value="cancel">キャンセル</button>
-          <button class="button danger" id="confirmDelete" value="default">削除する</button>
-        </div>
-      </form>
-    </dialog>
-    <dialog id="venueDialog" class="venue-dialog">
-      <div class="dialog-header">
-        <div>
-          <p class="eyebrow">LIVE DAY LOG</p>
-          <h2 id="venueDialogTitle">現場戦利品</h2>
-        </div>
-        <button class="icon-button" id="closeVenueDialog" aria-label="閉じる">×</button>
-      </div>
-      <div id="venueDialogBody" class="venue-dialog-body"></div>
-    </dialog>
+    <dialog id="entryDialog"><form method="dialog" id="entryForm"><div class="dialog-header"><h2 id="dialogTitle">登録</h2><button class="icon-button" type="button" data-close-entry aria-label="閉じる">×</button></div><div id="formFields" class="form-fields"></div><div class="dialog-actions"><button class="button secondary" type="button" data-close-entry>キャンセル</button><button class="button primary" id="saveButton" value="default">保存する</button></div></form></dialog>
+    <dialog id="confirmDialog" class="confirm-dialog"><form method="dialog"><h2>削除しますか？</h2><p id="confirmText">この記録は端末から削除されます。</p><div class="dialog-actions"><button class="button secondary" value="cancel">キャンセル</button><button class="button danger" id="confirmDelete" value="default">削除する</button></div></form></dialog>
+    <dialog id="venueDialog" class="venue-dialog"><div class="dialog-header"><div><p class="eyebrow">LIVE DAY LOG</p><h2 id="venueDialogTitle">現場戦利品</h2></div><button class="icon-button" id="closeVenueDialog" aria-label="閉じる">×</button></div><div id="venueDialogBody" class="venue-dialog-body"></div></dialog>
     <input id="importInput" type="file" accept="application/json" hidden />
-    <script src="app.js?v=12"></script>
+    <script>
+      (() => {
+        const pages = ['home', 'goods', 'random', 'plans'];
+        document.addEventListener('click', event => {
+          const button = event.target.closest('[data-page]');
+          if (button) history.replaceState(null, '', '#' + button.dataset.page);
+        }, true);
+        const page = location.hash.slice(1);
+        if (pages.includes(page)) window.addEventListener('DOMContentLoaded', () => {
+          document.querySelector('[data-page="' + page + '"]')?.click();
+        });
+      })();
+    </script>
+    <script src="app.js?v=14"></script>
   </body>
 </html>
-
